@@ -18,7 +18,10 @@ object StartBotGenerator {
     val generatorScriptName = config.getString("app.botgenScript")
     val dataFileName = config.getString("app.partnerSourceFile")
     val botCount = config.getInt("app.botCount")
-    //val netcatPath = "localhost 11111"
+
+    val netcatHost = config.getString("netcat.host")
+    val netcatPort = config.getString("netcat.port")
+    val netcatPath = s"$netcatHost $netcatPort"
 
     logger.info(s"""Loaded config: bootstrap server = $bootstrapServer,
                 "partners source topic in Kafka = $partnerSourceTopicName,
