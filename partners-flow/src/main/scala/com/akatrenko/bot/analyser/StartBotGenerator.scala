@@ -19,9 +19,9 @@ object StartBotGenerator {
     val dataFileName = config.getString("app.partnerSourceFile")
     val botCount = config.getInt("app.botCount")
 
-    val netcatHost = config.getString("netcat.host")
+    /*val netcatHost = config.getString("netcat.host")
     val netcatPort = config.getString("netcat.port")
-    val netcatPath = s"$netcatHost $netcatPort"
+    val netcatPath = s"$netcatHost $netcatPort"*/
 
     logger.info(s"""Loaded config: bootstrap server = $bootstrapServer,
                 "partners source topic in Kafka = $partnerSourceTopicName,
@@ -29,7 +29,7 @@ object StartBotGenerator {
                 generator script name = $generatorScriptName, source file name = $dataFileName""")
 
     //todo start generator mode in interval?
-    val createDataJsonFiles = s"python3 $directoryPath/generator/$generatorScriptName -f $directoryPath/generator/$dataFileName -b $botCount" !
+    s"python3 $directoryPath/generator/$generatorScriptName -f $directoryPath/generator/$dataFileName -b $botCount" !
       ProcessLogger(stdout append _, stderr append _)
   }
 }
