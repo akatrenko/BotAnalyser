@@ -9,8 +9,11 @@
         <module name="dstream-analyser" />
         <module name="partners-flow" />
         <module name="stream-common" />
-        <module name="structStream-analyser" />
+        <module name="struct-stream-analyser" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="struct-stream-analyser" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -55,16 +55,13 @@ trait DstreamFunctions extends BotDetectedFunctions {
       "enable.auto.commit" -> streamProperties.getProperty("enable.auto.commit", "false")
     )
 
-    //consumer
     val rowStream = KafkaUtils.createDirectStream[String, String](ssc, PreferConsistent,
       Subscribe[String, String](Set(topicName), kafkaParams))
 
-    //deserialize
     val messageStream = deserializeDStream[Message](rowStream.map(_.value()))
       .filter(eitherMsg => eitherMsg.isLeft && eitherMsg.left.get.checkType)
       .map(_.left.get)
 
-    //who is a bot?
     val badBotStream = messageStream
       .map(msg => ((msg.ip, msg.unix_time.toLong), msg))
       .reduceByKeyAndWindow((_, msg) => msg, Seconds(windowDurationSec))
@@ -76,7 +73,6 @@ trait DstreamFunctions extends BotDetectedFunctions {
       .reduceByKey((msgLeft, msgRight) => msgLeft ++ msgRight)
       .flatMap(findBot(sourceName))
 
-    //write to db
     badBotStream.saveToCassandra(keyspaceName = cassandraKeySpaceName,
       tableName = cassandraTableName,
       writeConf = WriteConf(ttl = TTLOption.constant(cassandraTTL))

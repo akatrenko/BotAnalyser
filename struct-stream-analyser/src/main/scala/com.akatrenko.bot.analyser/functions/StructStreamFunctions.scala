@@ -14,8 +14,8 @@ import scala.collection.immutable
 import scala.util.{Failure, Success, Try}
 
 trait StructStreamFunctions extends BotDetectedFunctions {
-  private def deserializeDatasetStream[T <: Product](stream: Dataset[String], spark: SparkSession)
-                                                    (implicit mf: Manifest[T]): Dataset[T] = {
+  private def deserializeStructStream[T <: Product](stream: Dataset[String], spark: SparkSession)
+                                                   (implicit mf: Manifest[T]): Dataset[T] = {
     import spark.implicits._
     stream.flatMap { row =>
       implicit val formats: DefaultFormats = DefaultFormats
@@ -56,11 +56,12 @@ trait StructStreamFunctions extends BotDetectedFunctions {
       .selectExpr("CAST(value AS STRING)")
       .as[String]
 
-    val messageStream: Dataset[Message] = deserializeDatasetStream(structStream, spark)
+    val messageStream: Dataset[Message] = deserializeStructStream(structStream, spark)
+      .filter(_.checkType)
 
-    //who is a bot??
     implicit val messageEncoder: Encoder[Message] = org.apache.spark.sql.Encoders.kryo[Message]
-    val badBotStream = messageStream.groupByKey(_.ip).flatMapGroups { case (k, v) => findBot(sourceName)((k, v.toIterable)) }
+    val badBotStream =
+      messageStream.groupByKey(_.ip).flatMapGroups { case (k, v) => findBot(sourceName)((k, v.toIterable)) }
 
     writeToCassandra(spark, badBotStream, streamProperties)
       .trigger(Trigger.ProcessingTime("20 seconds"))
@@ -70,8 +71,10 @@ trait StructStreamFunctions extends BotDetectedFunctions {
 
   }
 
-  private def writeToCassandra(spark: SparkSession, datastream: Dataset[BadBot], props: Properties): DataStreamWriter[BadBot] = {
-    datastream.writeStream
+  private def writeToCassandra(spark: SparkSession,
+                               stream: Dataset[BadBot],
+                               props: Properties): DataStreamWriter[BadBot] = {
+    stream.writeStream
       .foreach(new CassandraWriter(CassandraConnector(spark.sparkContext.getConf), props))
   }
 }

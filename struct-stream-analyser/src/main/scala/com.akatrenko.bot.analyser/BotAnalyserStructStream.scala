@@ -4,9 +4,9 @@ import com.akatrenko.bot.analyser.functions.{StreamFunctions, StructStreamFuncti
 import org.apache.spark.sql.SparkSession
 import org.slf4j.LoggerFactory
 
-object BotAnalyserSStream extends StructStreamFunctions with StreamFunctions with Serializable {
+object BotAnalyserStructStream extends StructStreamFunctions with StreamFunctions with Serializable {
   def main(args: Array[String]): Unit = {
-    val logger = LoggerFactory.getLogger(BotAnalyserSStream.getClass.getName)
+    val logger = LoggerFactory.getLogger(BotAnalyserStructStream.getClass.getName)
     val streamName = "BotAnalyserStructStream"
 
     val streamProperties = loadProperties(streamName)

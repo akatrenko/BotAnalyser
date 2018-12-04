@@ -21,7 +21,7 @@
         <module>stream-common</module>
         <module>partners-flow</module>
         <module>dstream-analyser</module>
-        <module>structStream-analyser</module>
+        <module>struct-stream-analyser</module>
     </modules>
 
     <dependencies>
