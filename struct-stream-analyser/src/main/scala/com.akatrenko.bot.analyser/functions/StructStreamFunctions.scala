@@ -35,7 +35,7 @@ trait StructStreamFunctions extends BotDetectedFunctions {
     import spark.implicits._
 
     val sourceName = "StructedStream"
-    val triggerProcessTime = "20 seconds"
+    val triggerProcessTime = s"${streamProperties.getProperty("sstreaming.window.duration.sec")} seconds"
 
     val topicName = streamProperties.getProperty("sstreaming.kafka.topic.name")
     val kafkaConsumerGroupId = streamProperties.getProperty("sstreaming.kafka.consumer.group")
