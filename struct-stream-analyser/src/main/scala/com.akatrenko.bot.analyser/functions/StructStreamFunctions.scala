@@ -35,10 +35,11 @@ trait StructStreamFunctions extends BotDetectedFunctions {
     import spark.implicits._
 
     val sourceName = "StructedStream"
+    val triggerProcessTime = "20 seconds"
 
-    val topicName = streamProperties.getProperty("dstreaming.kafka.topic.name")
-    val kafkaConsumerGroupId = streamProperties.getProperty("dstreaming.kafka.consumer.group")
-    val bootstrapServers = streamProperties.getProperty("dstreaming.kafka.bootstrap.server")
+    val topicName = streamProperties.getProperty("sstreaming.kafka.topic.name")
+    val kafkaConsumerGroupId = streamProperties.getProperty("sstreaming.kafka.consumer.group")
+    val bootstrapServers = streamProperties.getProperty("sstreaming.kafka.bootstrap.server")
 
     logger.info(
       s"""Kafka config: bootstrapServers = $bootstrapServers, kafkaConsumerGroupId = $kafkaConsumerGroupId,
@@ -64,7 +65,7 @@ trait StructStreamFunctions extends BotDetectedFunctions {
       messageStream.groupByKey(_.ip).flatMapGroups { case (k, v) => findBot(sourceName)((k, v.toIterable)) }
 
     writeToCassandra(spark, badBotStream, streamProperties)
-      .trigger(Trigger.ProcessingTime("20 seconds"))
+      .trigger(Trigger.ProcessingTime(triggerProcessTime))
       .outputMode(OutputMode.Update())
       .start()
       .awaitTermination()

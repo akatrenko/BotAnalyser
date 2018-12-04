@@ -63,7 +63,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
       .map(_.left.get)
 
     val badBotStream = messageStream
-      .map(msg => ((msg.ip, msg.unix_time.toLong), msg))
+      .map(msg => ((msg.ip, msg.unixTime.toLong), msg))
       .reduceByKeyAndWindow((_, msg) => msg, Seconds(windowDurationSec))
       .mapWithState(
         StateSpec

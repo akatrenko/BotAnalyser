@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory
 object BotAnalyserDStream extends DstreamFunctions with StreamFunctions with Serializable {
 
   def main(args: Array[String]): Unit = {
-    val streamName = "BotAnalyser"
+    val streamName = "BotAnalyserDStream"
     val logger = LoggerFactory.getLogger(BotAnalyserDStream.getClass.getName)
     val streamProperties = loadProperties(streamName)
     val checkpointDir = streamProperties.getProperty("dstreaming.checkpoint.dir")

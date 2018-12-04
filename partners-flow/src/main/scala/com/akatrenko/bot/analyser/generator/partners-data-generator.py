@@ -38,8 +38,8 @@ def user2ip(id): return "172.10.{}.{}".format(int(id / 255), id % 255)
 def bot2ip(id): return "172.20.{}.{}".format(int(id / 255), id % 255)
 def asits(dt): return int(dt.timestamp())
 
-#def asJson(entry): return { 'unixTime' : asits(entry[0]), 'categoryId': entry[1], 'ip' : entry[2], 'actionType' : entry[3] }
-def asJson(entry): return { 'unix_time' : asits(entry[0]), 'category_id': entry[1], 'ip' : entry[2], 'types' : entry[3] }
+def asJson(entry): return { 'unixTime' : asits(entry[0]), 'categoryId': entry[1], 'ip' : entry[2], 'actionType' : entry[3] }
+#def asJson(entry): return { 'unix_time' : asits(entry[0]), 'category_id': entry[1], 'ip' : entry[2], 'types' : entry[3] }
 
 def writeAsJson(entry, fd = None):
     if fd:
@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('-b', '--bots',     type=int, default=7,    help="number of bots")
+    parser.add_argument('-b', '--bots',     type=int, default=0,    help="number of bots")
     parser.add_argument('-u', '--users',    type=int, default=1000, help="number of users")
     parser.add_argument('-d', '--duration', type=int, default=300,   help="log duration in sec")
     parser.add_argument('-n', '--freq',     type=int, default=100,   help="number of user's requests in sec")

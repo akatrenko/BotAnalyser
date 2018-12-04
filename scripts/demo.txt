@@ -1,0 +1,30 @@
+--move to homebrew folder
+cd /<homebrew-path>/Cellar/kafka/2.0.
+
+--start local Zookeeper
+zookeeper-server-start libexec/config/zookeeper.properties
+
+--start local Kafka
+kafka-server-start libexec/config/server.properties
+
+--start local flume
+cd /<project-path>/bot-analyser/partners-flow/src/main/scala/com/akatrenko/bot/analyser
+flume-ng agent --name stop-bot-agent --conf connector --conf-file connector/flume-agent.conf -Dflume.root.logger=DEBUG,console
+
+--start local Cassandra
+cassandra -f
+
+--start local Cassandra console
+cqlsh
+
+--switch work keyspace
+use local_project;
+
+--check result table
+select * from source_bot;
+
+--start local Spark Job from IDEA
+...
+
+--start local 'partners-flow' module
+...

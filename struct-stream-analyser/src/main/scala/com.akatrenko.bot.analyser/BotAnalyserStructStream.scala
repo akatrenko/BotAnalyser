@@ -10,7 +10,7 @@ object BotAnalyserStructStream extends StructStreamFunctions with StreamFunction
     val streamName = "BotAnalyserStructStream"
 
     val streamProperties = loadProperties(streamName)
-    val checkpointDir = streamProperties.getProperty("dstreaming.checkpoint.dir")
+    val checkpointDir = streamProperties.getProperty("sstreaming.checkpoint.dir")
 
     val spark = SparkSession
       .builder()

@@ -1,0 +1,2 @@
+--create kafka topic to partners data
+kafka-topics --create --zookeeper localhostl:2181 --replication-factor 1 --partitions 1 --topic partner-message

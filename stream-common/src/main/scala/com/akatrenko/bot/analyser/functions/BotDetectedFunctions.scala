@@ -40,7 +40,7 @@ trait BotDetectedFunctions {
     * include process cases when there is no views
     */
   private[functions] def checkTypeDiffRule(ipGroup: (String, Iterable[Message])): Boolean = {
-    val typeGroup = ipGroup._2.groupBy(_.types)
+    val typeGroup = ipGroup._2.groupBy(_.actionType)
     val clickGroupOpt = typeGroup.get(MessageType.ClickType)
     val viewGroupOpt = typeGroup.get(MessageType.ViewType)
 
@@ -55,6 +55,6 @@ trait BotDetectedFunctions {
     * Many categories during the period, e.g. more than 5 categories in 10 periods
     */
   private[functions] def checkCategoryCount(ipGroup: (String, Iterable[Message])): Boolean = {
-    ipGroup._2.filter(ipEvent => ipEvent.types == MessageType.ClickType).groupBy(_.category_id).size > Rules.MaxCategories
+    ipGroup._2.filter(ipEvent => ipEvent.actionType == MessageType.ClickType).groupBy(_.categoryId).size > Rules.MaxCategories
   }
 }
