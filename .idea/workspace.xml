@@ -2,23 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15bcfef9-ba7c-4b7e-8b07-c43fe67b65ee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/scripts/cassandra.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/demo.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/kafka.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyser.properties" beforeDir="false" afterPath="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/BotAnalyserDStream.scala" beforeDir="false" afterPath="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/BotAnalyserDStream.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" beforeDir="false" afterPath="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partners-flow/scripts/application.conf" beforeDir="false" afterPath="$PROJECT_DIR$/partners-flow/scripts/application.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/connector/file-stream-bot-standalone.properties" beforeDir="false" afterPath="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/connector/file-stream-bot-standalone.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/connector/flume-agent.conf" beforeDir="false" afterPath="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/connector/flume-agent.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/generator/partners-data-generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/generator/partners-data-generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/functions/BotDetectedFunctions.scala" beforeDir="false" afterPath="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/functions/BotDetectedFunctions.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/BadBot.scala" beforeDir="false" afterPath="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/BadBot.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/Message.scala" beforeDir="false" afterPath="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/Message.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/struct-stream-analyser/scripts/BotAnalyserStructStream.properties" beforeDir="false" afterPath="$PROJECT_DIR$/struct-stream-analyser/scripts/BotAnalyserStructStream.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/BotAnalyserStructStream.scala" beforeDir="false" afterPath="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/BotAnalyserStructStream.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/CassandraWriter.scala" beforeDir="false" afterPath="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/CassandraWriter.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/generator/partners-data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/generator/partners-data.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/kafka.txt" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/kafka.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/StructStreamFunctions.scala" beforeDir="false" afterPath="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/StructStreamFunctions.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -27,6 +14,7 @@
     <ignored path="$PROJECT_DIR$/dstream-analyser/target/" />
     <ignored path="$PROJECT_DIR$/structStream-analyser/target/" />
     <ignored path="$PROJECT_DIR$/stream-common/target/" />
+    <ignored path="$PROJECT_DIR$/struct-stream-analyser/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,12 +73,12 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="2" />
-          <entry key="conf" value="10" />
+          <entry key="conf" value="11" />
           <entry key="java" value="1" />
           <entry key="md" value="1" />
-          <entry key="properties" value="23" />
-          <entry key="py" value="6" />
-          <entry key="scala" value="96" />
+          <entry key="properties" value="25" />
+          <entry key="py" value="7" />
+          <entry key="scala" value="101" />
           <entry key="txt" value="15" />
           <entry key="xml" value="10" />
         </counts>
@@ -98,12 +86,12 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="2" />
-          <entry key="HOCON" value="10" />
+          <entry key="HOCON" value="11" />
           <entry key="JAVA" value="1" />
           <entry key="PLAIN_TEXT" value="16" />
-          <entry key="Properties" value="23" />
-          <entry key="Python" value="6" />
-          <entry key="Scala" value="96" />
+          <entry key="Properties" value="25" />
+          <entry key="Python" value="7" />
+          <entry key="Scala" value="101" />
           <entry key="XML" value="10" />
         </counts>
       </usages-collector>
@@ -113,18 +101,18 @@
           <entry key="md" value="14" />
           <entry key="properties" value="56" />
           <entry key="py" value="10" />
-          <entry key="scala" value="4408" />
-          <entry key="txt" value="518" />
+          <entry key="scala" value="4410" />
+          <entry key="txt" value="548" />
           <entry key="xml" value="61" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HOCON" value="53" />
-          <entry key="PLAIN_TEXT" value="532" />
+          <entry key="PLAIN_TEXT" value="562" />
           <entry key="Properties" value="56" />
           <entry key="Python" value="10" />
-          <entry key="Scala" value="4408" />
+          <entry key="Scala" value="4410" />
           <entry key="XML" value="61" />
         </counts>
       </usages-collector>
@@ -136,7 +124,7 @@
         <entry file="file://$PROJECT_DIR$/scripts/demo.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -151,36 +139,81 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/kafka.txt">
+        <entry file="file://$PROJECT_DIR$/partners-flow/scripts/application.conf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="96" lean-forward="true" selection-start-line="1" selection-start-column="96" selection-end-line="1" selection-end-column="111" />
+            <state relative-caret-position="210">
+              <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/connector/flume-agent.conf">
+        <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/BotAnalyserStructStream.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-196">
-              <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="127" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/Message.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="80" selection-start-line="4" selection-start-column="80" selection-end-line="4" selection-end-column="80" />
+            <state relative-caret-position="135">
+              <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
+              <folding>
+                <element signature="e#36#120#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/CassandraWriter.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="25" column="23" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="23" />
+              <folding>
+                <element signature="e#46#73#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/StructStreamFunctions.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="355">
+              <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/struct-stream-analyser/scripts/BotAnalyserStructStream.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/functions/StreamFunctions.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
+              <folding>
+                <element signature="e#46#76#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="108" selection-start-line="108" selection-end-line="108" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/StartBotGenerator.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
+            <state relative-caret-position="330">
               <caret line="30" column="43" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
               <folding>
                 <element signature="e#36#76#0" expanded="true" />
@@ -263,12 +296,10 @@
         <option value="$PROJECT_DIR$/structStream-analyser/src/main/scala/com.akatrenko.bot.analyser/BotAnalyserStructStream.scala" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/structStream-analyser/pom.xml" />
-        <option value="$PROJECT_DIR$/scripts/kafka.txt" />
         <option value="$PROJECT_DIR$/scripts/cassandra.txt" />
         <option value="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/BadBot.scala" />
         <option value="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyser.properties" />
         <option value="$PROJECT_DIR$/struct-stream-analyser/scripts/BotAnalyserStructStream.properties" />
-        <option value="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/StructStreamFunctions.scala" />
         <option value="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/CassandraWriter.scala" />
         <option value="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/BotAnalyserDStream.scala" />
         <option value="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" />
@@ -278,6 +309,9 @@
         <option value="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/connector/file-stream-bot-standalone.properties" />
         <option value="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/generator/partners-data-generator.py" />
         <option value="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/Message.scala" />
+        <option value="$PROJECT_DIR$/scripts/kafka.txt" />
+        <option value="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/StructStreamFunctions.scala" />
+        <option value="$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/BotAnalyserStructStream.scala" />
       </list>
     </option>
   </component>
@@ -562,7 +596,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543910788376" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543911813199" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -600,10 +634,36 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="ScalaTest.BotDetectedSpec">
+  <component name="RunManager" selected="Application.BotAnalyserStructStream">
     <configuration name="BotAnalyserDStream" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.akatrenko.bot.analyser.BotAnalyserDStream" />
       <module name="dstream-analyser" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.akatrenko.bot.analyser.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BotAnalyserStructStream" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.akatrenko.bot.analyser.BotAnalyserStructStream" />
+      <module name="struct-stream-analyser" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.akatrenko.bot.analyser.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StartBotGenerator" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.akatrenko.bot.analyser.StartBotGenerator" />
+      <module name="partners-flow" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.akatrenko.bot.analyser.*" />
@@ -627,42 +687,6 @@
       <envs />
       <setting name="testKind" value="Class" />
       <setting name="path" value="com.akatrenko.bot.analyser.functions.BotDetectedSpec" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BotDetectedSpec.Dstream finder bot should return 1 bot from category count rule" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
-      <module name="stream-common" />
-      <setting name="path" value="com.akatrenko.bot.analyser.functions.BotDetectedSpec" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="file://$PROJECT_DIR$/dstream-analyser" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="showProgressMessages" value="true" />
-      <setting name="useSbt" value="false" />
-      <setting name="useUiWithSbt" value="false" />
-      <envs />
-      <setting name="testKind" value="Test name" />
-      <setting name="path" value="com.akatrenko.bot.analyser.functions.BotDetectedSpec" />
-      <setting name="testName" value="Dstream finder bot should return 1 bot from category count rule" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BotDetectedSpec.Dstream finder bot should return 1 bot from event rate rule" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
-      <module name="stream-common" />
-      <setting name="path" value="com.akatrenko.bot.analyser.functions.BotDetectedSpec" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="file://$PROJECT_DIR$/dstream-analyser" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="showProgressMessages" value="true" />
-      <setting name="useSbt" value="false" />
-      <setting name="useUiWithSbt" value="false" />
-      <envs />
-      <setting name="testKind" value="Test name" />
-      <setting name="path" value="com.akatrenko.bot.analyser.functions.BotDetectedSpec" />
-      <setting name="testName" value="Dstream finder bot should return 1 bot from event rate rule" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -745,18 +769,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.BotAnalyserDStream" />
-      <item itemvalue="ScalaTest.BotDetectedSpec.Dstream finder bot should return 1 bot from category count rule" />
-      <item itemvalue="ScalaTest.BotDetectedSpec.Dstream finder bot should return 1 bot from event rate rule" />
       <item itemvalue="ScalaTest.BotDetectedSpec.Dstream finder bot should return 2 bots from type different rule" />
       <item itemvalue="ScalaTest.BotDetectedSpec" />
+      <item itemvalue="Application.StartBotGenerator" />
+      <item itemvalue="Application.BotAnalyserStructStream" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.BotAnalyserStructStream" />
+        <item itemvalue="Application.BotAnalyserDStream" />
+        <item itemvalue="Application.StartBotGenerator" />
         <item itemvalue="ScalaTest.BotDetectedSpec" />
         <item itemvalue="ScalaTest.BotDetectedSpec.Dstream finder bot should return 2 bots from type different rule" />
-        <item itemvalue="ScalaTest.BotDetectedSpec.Dstream finder bot should return 1 bot from event rate rule" />
-        <item itemvalue="ScalaTest.BotDetectedSpec.Dstream finder bot should return 1 bot from category count rule" />
-        <item itemvalue="Application.BotAnalyserDStream" />
       </list>
     </recent_temporary>
   </component>
@@ -792,7 +816,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543907266634</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update source-sink properties">
+      <created>1543910861138</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1543910861138</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -829,7 +860,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25178826" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -839,8 +869,8 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32961586" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3283767" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32961586" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3283767" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -866,7 +896,8 @@
     <MESSAGE value="add netcat config" />
     <MESSAGE value="update project info" />
     <MESSAGE value="refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor" />
+    <MESSAGE value="update source-sink properties" />
+    <option name="LAST_COMMIT_MESSAGE" value="update source-sink properties" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/lang/Long.java">
@@ -998,16 +1029,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/functions/StreamFunctions.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding>
-            <element signature="e#46#76#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/constant/MessageType.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1039,37 +1060,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/cassandra.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="23" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/StructStreamFunctions.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/CassandraWriter.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/BotAnalyserStructStream.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="69" selection-start-line="6" selection-start-column="69" selection-end-line="6" selection-end-column="69" />
-          <folding>
-            <element signature="e#36#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/BotAnalyserDStream.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1080,52 +1070,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="35" column="54" selection-start-line="35" selection-start-column="54" selection-end-line="35" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/struct-stream-analyser/scripts/BotAnalyserStructStream.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="28" lean-forward="true" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partners-flow/scripts/application.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/demo.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/kafka.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="96" lean-forward="true" selection-start-line="1" selection-start-column="96" selection-end-line="1" selection-end-column="111" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/connector/file-stream-bot-standalone.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="24" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -1148,27 +1096,112 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/generator/partners-data-generator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-811">
-          <caret line="20" column="44" lean-forward="true" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
+        <state>
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/connector/file-stream-bot-standalone.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/connector/flume-agent.conf">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-196">
-          <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="127" />
+        <state relative-caret-position="314">
+          <caret line="35" column="57" selection-start-line="35" selection-start-column="57" selection-end-line="35" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/kafka.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/demo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="108" selection-start-line="108" selection-end-line="108" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/StartBotGenerator.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
+        <state relative-caret-position="330">
           <caret line="30" column="43" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
           <folding>
             <element signature="e#36#76#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/cassandra.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partners-flow/scripts/application.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/functions/StreamFunctions.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#46#76#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/StructStreamFunctions.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/struct-stream-analyser/scripts/BotAnalyserStructStream.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/BotAnalyserStructStream.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
+          <folding>
+            <element signature="e#36#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/CassandraWriter.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="25" column="23" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="23" />
+          <folding>
+            <element signature="e#46#73#0" expanded="true" />
           </folding>
         </state>
       </provider>

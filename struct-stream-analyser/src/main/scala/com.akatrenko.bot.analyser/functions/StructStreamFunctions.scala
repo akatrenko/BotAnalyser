@@ -58,11 +58,10 @@ trait StructStreamFunctions extends BotDetectedFunctions {
       .as[String]
 
     val messageStream: Dataset[Message] = deserializeStructStream(structStream, spark)
-      .filter(_.checkType)
 
     implicit val messageEncoder: Encoder[Message] = org.apache.spark.sql.Encoders.kryo[Message]
-    val badBotStream =
-      messageStream.groupByKey(_.ip).flatMapGroups { case (k, v) => findBot(sourceName)((k, v.toIterable)) }
+    val badBotStream = messageStream.filter(_.checkType).groupByKey(_.ip)
+      .flatMapGroups { case (k, v) => findBot(sourceName)((k, v.toIterable)) }
 
     writeToCassandra(spark, badBotStream, streamProperties)
       .trigger(Trigger.ProcessingTime(triggerProcessTime))

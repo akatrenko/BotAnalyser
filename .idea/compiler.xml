@@ -12,8 +12,5 @@
         <module name="struct-stream-analyser" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="struct-stream-analyser" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
