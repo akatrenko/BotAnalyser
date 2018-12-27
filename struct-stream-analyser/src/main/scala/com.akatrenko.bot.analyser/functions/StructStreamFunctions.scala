@@ -1,32 +1,41 @@
 package com.akatrenko.bot.analyser.functions
 
+import java.sql.Timestamp
+import java.time.Instant
 import java.util.Properties
 
-import com.akatrenko.bot.analyser.model.{BadBot, Message}
+import com.akatrenko.bot.analyser.model.{BadBot, Message, MessageAgg, MessageEvent}
 import com.datastax.spark.connector.cql.CassandraConnector
 import org.apache.spark.sql.streaming.{DataStreamWriter, OutputMode, Trigger}
-import org.apache.spark.sql.{Dataset, Encoder, SparkSession}
+import org.apache.spark.sql.{Dataset, SparkSession}
+import org.apache.spark.sql.functions._
 import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods.parse
 import org.slf4j.Logger
+import com.akatrenko.bot.analyser.constant.MessageType._
+import com.akatrenko.bot.analyser.constant.Rules._
 
-import scala.collection.immutable
 import scala.util.{Failure, Success, Try}
 
 trait StructStreamFunctions extends BotDetectedFunctions {
-  private def deserializeStructStream[T <: Product](stream: Dataset[String], spark: SparkSession)
-                                                   (implicit mf: Manifest[T]): Dataset[T] = {
+  private def deserializeStructStream(stream: Dataset[String], spark: SparkSession)
+                                     (implicit mf: Manifest[MessageEvent]): Dataset[MessageEvent] = {
     import spark.implicits._
     stream.flatMap { row =>
       implicit val formats: DefaultFormats = DefaultFormats
       val parseResult = Try {
-        parse(row).extract[T]
+        parse(row).extract[Message]
       }
       parseResult match {
-        case Success(msg: T) => Seq(msg)
+        case Success(msg: Message) =>
+          msg.actionType match {
+            case ViewType => Some(MessageEvent(new Timestamp(msg.unixTime.toLong), msg.categoryId, msg.ip, 0, 1))
+            case ClickType => Some(MessageEvent(new Timestamp(msg.unixTime.toLong), msg.categoryId, msg.ip, 1, 0))
+            case _ => None
+          }
         case Failure(ex) =>
           ex.printStackTrace()
-          immutable.Seq[T]()
+          None
       }
     }
   }
@@ -35,7 +44,9 @@ trait StructStreamFunctions extends BotDetectedFunctions {
     import spark.implicits._
 
     val sourceName = "StructedStream"
-    val triggerProcessTime = s"${streamProperties.getProperty("sstreaming.window.duration.sec")} seconds"
+    val triggerProcessTime = s"${streamProperties.getProperty("sstreaming.trigger.sec")} seconds"
+    val windowDuration = s"${streamProperties.getProperty("sstreaming.window.duration.min")} minutes"
+    val slideDuration = s"${streamProperties.getProperty("sstreaming.slide.duration.sec")} seconds"
 
     val topicName = streamProperties.getProperty("sstreaming.kafka.topic.name")
     val kafkaConsumerGroupId = streamProperties.getProperty("sstreaming.kafka.consumer.group")
@@ -57,18 +68,30 @@ trait StructStreamFunctions extends BotDetectedFunctions {
       .selectExpr("CAST(value AS STRING)")
       .as[String]
 
-    val messageStream: Dataset[Message] = deserializeStructStream(structStream, spark)
+    val messageStream: Dataset[MessageEvent] = deserializeStructStream(structStream, spark)
 
-    implicit val messageEncoder: Encoder[Message] = org.apache.spark.sql.Encoders.kryo[Message]
-    val badBotStream = messageStream.filter(_.checkType).groupByKey(_.ip)
-      .flatMapGroups { case (k, v) => findBot(sourceName)((k, v.toIterable)) }
+    val badBotStream = messageStream
+      .groupBy($"ip", window($"unixTime", windowDuration, slideDuration))
+      .agg(sum($"clickEvent").alias("clicks"),
+        sum($"viewEvent").alias("views"),
+        collect_set($"categoryId").as("categories")
+      )
+      .drop("window")
+      .as[MessageAgg]
+      .filter(findBot _)
+      .map(m => BadBot(m.ip, "", Timestamp.from(Instant.now()), sourceName))
 
     writeToCassandra(spark, badBotStream, streamProperties)
       .trigger(Trigger.ProcessingTime(triggerProcessTime))
       .outputMode(OutputMode.Update())
       .start()
       .awaitTermination()
+  }
 
+  private def findBot(msg: MessageAgg): Boolean = {
+    (msg.clicks + msg.views) > MaxEventRate ||
+      (msg.clicks / math.max(msg.views, 1)) > MinEventDifference ||
+      msg.categories.size > MaxCategories
   }
 
   private def writeToCassandra(spark: SparkSession,
