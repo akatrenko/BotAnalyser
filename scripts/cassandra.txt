@@ -8,7 +8,6 @@ CREATE KEYSPACE local_project
 --create table
 CREATE TABLE source_bot (
     ip TEXT PRIMARY KEY,
-    rule TEXT,
     date_create TIMESTAMP,
     source_stream TEXT
 );

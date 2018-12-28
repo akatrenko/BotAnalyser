@@ -24,8 +24,8 @@ class CassandraWriter(connector: CassandraConnector, props: Properties) extends 
 
   def cassandraQuery(record: BadBot): String = {
     println(s"Bad bot: $record")
-    s"""INSERT INTO $cassandraKeySpaceName.$cassandraTableName (ip, date_create, rule, source_stream)
-       |VALUES('${record.ip}', '${record.date_create}', '${record.rule}', '${record.source_stream}')
+    s"""INSERT INTO $cassandraKeySpaceName.$cassandraTableName (ip, date_create, source_stream)
+       |VALUES('${record.ip}', '${record.date_create}', '${record.source_stream}')
        |USING TTL $cassandraTTL""".stripMargin
   }
 

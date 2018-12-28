@@ -13,7 +13,6 @@ import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods.parse
 import org.slf4j.Logger
 import com.akatrenko.bot.analyser.constant.MessageType._
-import com.akatrenko.bot.analyser.constant.Rules._
 
 import scala.util.{Failure, Success, Try}
 
@@ -79,19 +78,13 @@ trait StructStreamFunctions extends BotDetectedFunctions {
       .drop("window")
       .as[MessageAgg]
       .filter(findBot _)
-      .map(m => BadBot(m.ip, Timestamp.from(Instant.now()), "", sourceName))
+      .map(m => BadBot(m.ip, Timestamp.from(Instant.now()), sourceName))
 
     writeToCassandra(spark, badBotStream, streamProperties)
       .trigger(Trigger.ProcessingTime(triggerProcessTime))
       .outputMode(OutputMode.Update())
       .start()
       .awaitTermination()
-  }
-
-  private def findBot(msg: MessageAgg): Boolean = {
-    (msg.clicks + msg.views) > MaxEventRate ||
-      (msg.clicks / math.max(msg.views, 1)) > MinEventDifference ||
-      msg.categories.size > MaxCategories
   }
 
   private def writeToCassandra(spark: SparkSession,

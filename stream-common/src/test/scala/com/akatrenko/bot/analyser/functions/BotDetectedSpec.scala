@@ -3,7 +3,7 @@ package com.akatrenko.bot.analyser.functions
 import java.time.Instant
 
 import com.akatrenko.bot.analyser.constant.{MessageType, Rules}
-import com.akatrenko.bot.analyser.model.Message
+import com.akatrenko.bot.analyser.model.{Message, MessageAgg}
 import org.scalatest.{FlatSpec, Matchers}
 
 class BotDetectedSpec extends FlatSpec with Matchers with BotDetectedFunctions {
@@ -20,14 +20,12 @@ class BotDetectedSpec extends FlatSpec with Matchers with BotDetectedFunctions {
       Message(1543408780L, 1003, checkIp, "click"),
       Message(1543408780L, 1002, checkIp, "click")
     )
-
-    val resultBot = inputPartnersData.groupBy(_.ip).flatMap(findBot("DStreamTest"))
-    resultBot should have size 1
-    resultBot.foreach { bot =>
-      //println(bot)
-      bot.ip should be(checkIp)
-      bot.rule should be(categoryCount)
-    }
+    val messageAgg = MessageAgg(inputPartnersData.map(_.categoryId).toSet,
+      inputPartnersData.head.ip,
+      inputPartnersData.count(_.actionType == MessageType.ClickType),
+      inputPartnersData.count(_.actionType == MessageType.ViewType))
+    val resultBot = findBot(messageAgg)
+    resultBot shouldBe true
   }
 
   "Dstream finder bot" should "return 1 bot from event rate rule" in {
@@ -37,13 +35,17 @@ class BotDetectedSpec extends FlatSpec with Matchers with BotDetectedFunctions {
       GeneratorSpec("172.10.3.54", 4, 2),
       GeneratorSpec("172.10.3.55", 4, 2)).flatMap(generateData)
 
-    val resultBot = inputPartnersData.groupBy(_.ip).flatMap(findBot("DStreamTest"))
-    resultBot should have size 1
-    resultBot.foreach { bot =>
-      //println(bot)
-      bot.ip should be(checkIp)
-      bot.rule should be(eventRateRule)
-    }
+    val resultBot = inputPartnersData.groupBy(_.ip)
+      .map(m =>
+        MessageAgg(m._2.map(_.categoryId).toSet,
+          m._1,
+          m._2.count(_.actionType == MessageType.ClickType),
+          m._2.count(_.actionType == MessageType.ViewType))
+        )
+      .map(findBot)
+    resultBot should have size 3
+    resultBot.filter(m => m) should have size 1
+    resultBot.filter(m => !m) should have size 2
   }
 
   "Dstream finder bot" should "return 2 bots from type different rule" in {
@@ -54,10 +56,16 @@ class BotDetectedSpec extends FlatSpec with Matchers with BotDetectedFunctions {
       GeneratorSpec(checkSecondIp, 99, 10),
       GeneratorSpec("172.10.3.55", 4, 2)).flatMap(generateData)
 
-    val resultBot = inputPartnersData.groupBy(_.ip).flatMap(findBot("DStreamTest"))
-    resultBot should have size 2
-    resultBot.find(_.ip == checkFirstIp).map(_.rule) should be(Some(typeDiffRule))
-    resultBot.find(_.ip == checkSecondIp).map(_.rule) should be(Some(typeDiffRule))
+    val resultBot = inputPartnersData.groupBy(_.ip).map(m =>
+      MessageAgg(m._2.map(_.categoryId).toSet,
+        m._1,
+        m._2.count(_.actionType == MessageType.ClickType),
+        m._2.count(_.actionType == MessageType.ViewType))
+    )
+      .map(findBot)
+    resultBot should have size 3
+    resultBot.filter(m => m) should have size 1
+    resultBot.filter(m => !m) should have size 2
   }
 
   case class GeneratorSpec(ipStr: String, eventCount: Int, diffEventStepSec: Int)

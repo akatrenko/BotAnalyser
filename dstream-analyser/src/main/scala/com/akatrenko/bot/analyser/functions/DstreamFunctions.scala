@@ -70,7 +70,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
     val badBotStream = messageStream
       .reduceByKeyAndWindow((msg1: MessageAgg, msg2: MessageAgg) => msg1 + msg2, Minutes(windowDurationMin), Minutes(windowSlideMin))
       .filter(m=> findBot(m._2))
-      .map(m => BadBot(m._1, Timestamp.from(Instant.now()), "", sourceName))
+      .map(m => BadBot(m._1, Timestamp.from(Instant.now()), sourceName))
       /*.mapWithState(
         StateSpec
           .function(stateFunction _)
@@ -83,13 +83,6 @@ trait DstreamFunctions extends BotDetectedFunctions {
       writeConf = WriteConf(ttl = TTLOption.constant(cassandraTTL))
     )
     ssc
-  }
-
-  private def findBot(msg: MessageAgg): Boolean = {
-    import com.akatrenko.bot.analyser.constant.Rules._
-    (msg.clicks + msg.views) > MaxEventRate ||
-      (msg.clicks / math.max(msg.views, 1)) > MinEventDifference ||
-      msg.categories.size > MaxCategories
   }
 
   @deprecated
