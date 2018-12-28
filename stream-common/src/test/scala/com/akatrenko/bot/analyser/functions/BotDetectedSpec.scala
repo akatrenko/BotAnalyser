@@ -10,15 +10,15 @@ class BotDetectedSpec extends FlatSpec with Matchers with BotDetectedFunctions {
   "Dstream finder bot" should "return 1 bot from category count rule" in {
     val checkIp = "172.10.3.53"
     val inputPartnersData: Vector[Message] = Vector(
-      Message("1543408780", 1007, checkIp, "click"),
-      Message("1543409783", 1008, checkIp, "view"),
-      Message("1543408786", 1006, checkIp, "click"),
-      Message("1543408790", 1005, checkIp, "click"),
-      Message("1543409789", 1004, checkIp, "view"),
-      Message("1543409793", 1001, checkIp, "view"),
-      Message("1543408780", 1004, checkIp, "click"),
-      Message("1543408780", 1003, checkIp, "click"),
-      Message("1543408780", 1002, checkIp, "click")
+      Message(1543408780L, 1007, checkIp, "click"),
+      Message(1543409783L, 1008, checkIp, "view"),
+      Message(1543408786L, 1006, checkIp, "click"),
+      Message(1543408790L, 1005, checkIp, "click"),
+      Message(1543409789L, 1004, checkIp, "view"),
+      Message(1543409793L, 1001, checkIp, "view"),
+      Message(1543408780L, 1004, checkIp, "click"),
+      Message(1543408780L, 1003, checkIp, "click"),
+      Message(1543408780L, 1002, checkIp, "click")
     )
 
     val resultBot = inputPartnersData.groupBy(_.ip).flatMap(findBot("DStreamTest"))
@@ -102,7 +102,7 @@ class BotDetectedSpec extends FlatSpec with Matchers with BotDetectedFunctions {
                                res: Vector[Message]): Vector[Message] = {
     if (eventCount != 0) {
       val msgTime = unixTime + timeStep
-      val msg = Message(msgTime.toString, 1, ipStr, eventType)
+      val msg = Message(msgTime, 1, ipStr, eventType)
       generateMsgEvent(ipStr, eventType, eventCount.-(1), timeStep, msgTime, res :+ msg)
     } else {
       res

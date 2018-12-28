@@ -10,4 +10,4 @@ import java.sql.Timestamp
   * @param date_create   date created
   * @param source_stream input stream (DStream or Structured Streaming)
   */
-case class BadBot(ip: String, rule: String, date_create: Timestamp, source_stream: String) extends Serializable
+case class BadBot(ip: String, date_create: Timestamp, rule: String, source_stream: String) extends Serializable

@@ -1,7 +1,10 @@
 package com.akatrenko.bot.analyser.functions
 
+import java.sql.Timestamp
+import java.time.Instant
 import java.util.Properties
 
+import com.akatrenko.bot.analyser.constant.MessageType.{ClickType, ViewType}
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.dstream.DStream
@@ -25,7 +28,8 @@ trait DstreamFunctions extends BotDetectedFunctions {
     val checkpointDir = streamProperties.getProperty("dstreaming.checkpoint.dir")
 
     val streamingIntervalSec = streamProperties.getProperty("dstreaming.interval.sec").toInt
-    val windowDurationSec = streamProperties.getProperty("dstreaming.window.duration.sec").toInt
+    val windowDurationMin = streamProperties.getProperty("dstreaming.window.duration.min").toInt
+    val windowSlideMin = streamProperties.getProperty("dstreaming.window.slide.min").toInt
 
     val topicName = streamProperties.getProperty("dstreaming.kafka.topic.name")
     val kafkaConsumerGroupId = streamProperties.getProperty("dstreaming.kafka.consumer.group")
@@ -39,7 +43,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
       s"""Kafka config: bootstrapServers = $bootstrapServers, kafkaConsumerGroupId = $kafkaConsumerGroupId,
          |topicName = $topicName; Cassandra config: cassandraKeySpaceName = $cassandraKeySpaceName,
          |cassandraTableName = $cassandraTableName, cassandraTTL = $cassandraTTL;
-         |Stream config: windowDuration in second = $windowDurationSec,
+         |Stream config: windowDuration in minute = $windowDurationMin,
          |streamingInterval in second = $streamingIntervalSec
        """.stripMargin)
 
@@ -58,20 +62,21 @@ trait DstreamFunctions extends BotDetectedFunctions {
     val rowStream = KafkaUtils.createDirectStream[String, String](ssc, PreferConsistent,
       Subscribe[String, String](Set(topicName), kafkaParams))
 
-    val messageStream = deserializeDStream[Message](rowStream.map(_.value()))
+    val messageStream = deserializeDStream(rowStream.map(_.value()))
       .filter(eitherMsg => eitherMsg.isLeft && eitherMsg.left.get.checkType)
       .map(_.left.get)
+      .map(msg => (msg.ip, msg))
 
     val badBotStream = messageStream
-      .map(msg => ((msg.ip, msg.unixTime.toLong), msg))
-      .reduceByKeyAndWindow((_, msg) => msg, Seconds(windowDurationSec))
-      .mapWithState(
+      .reduceByKeyAndWindow((msg1: MessageAgg, msg2: MessageAgg) => msg1 + msg2, Minutes(windowDurationMin), Minutes(windowSlideMin))
+      .filter(m=> findBot(m._2))
+      .map(m => BadBot(m._1, Timestamp.from(Instant.now()), "", sourceName))
+      /*.mapWithState(
         StateSpec
           .function(stateFunction _)
-          .timeout(Seconds(windowDurationSec))
-      )
-      .reduceByKey((msgLeft, msgRight) => msgLeft ++ msgRight)
-      .flatMap(findBot(sourceName))
+          .timeout(Minutes(windowDurationMin))
+      )*/
+      //.reduceByKey((l: Vector[MessageAgg], r: Vector[MessageAgg]) => l ++ r)
 
     badBotStream.saveToCassandra(keyspaceName = cassandraKeySpaceName,
       tableName = cassandraTableName,
@@ -80,26 +85,33 @@ trait DstreamFunctions extends BotDetectedFunctions {
     ssc
   }
 
-  private def stateFunction(key: (String, Long),
-                            value: Option[Message],
-                            state: State[List[(Message, Long)]]): (String, List[Message]) = {
-    value.foreach { messageValue =>
+  private def findBot(msg: MessageAgg): Boolean = {
+    import com.akatrenko.bot.analyser.constant.Rules._
+    (msg.clicks + msg.views) > MaxEventRate ||
+      (msg.clicks / math.max(msg.views, 1)) > MinEventDifference ||
+      msg.categories.size > MaxCategories
+  }
+
+  @deprecated
+  private def stateFunction(key: String,
+                            value: Option[MessageAgg],
+                            state: State[Vector[MessageAgg]]): (String, Vector[MessageAgg]) = {
+    value.foreach { msg =>
       if (!state.isTimingOut) {
         state.update(
-          if (state.exists) {
-            state.get.filter(stateValue => stateValue._2 < (key._2 - 600)) :+ (messageValue, key._2)
-          }
-          else {
-            List((messageValue, key._2))
+          if (state.exists() && findBot(msg)) {
+            state.get() :+ msg
+          } else {
+            Vector.empty
           }
         )
       }
     }
-    (key._1, state.get.map(stateValue => stateValue._1))
+    (key, state.get())
   }
 
-  private def deserializeDStream[Message](stream: DStream[String])
-                                         (implicit mf: Manifest[Message]): DStream[Either[Message, StreamError[String]]] = {
+  private def deserializeDStream(stream: DStream[String])
+                                (implicit mf: Manifest[MessageAgg]): DStream[Either[MessageAgg, StreamError[String]]] = {
     stream.transform(rdd => {
       rdd.mapPartitions(jsonIterator => {
         implicit val formats: DefaultFormats = DefaultFormats
@@ -109,7 +121,13 @@ trait DstreamFunctions extends BotDetectedFunctions {
             parse(json).extract[Message]
           }
           parseResult match {
-            case Success(msg: Message) => Left(msg)
+            case Success(msg: Message) =>
+              Left(msg.actionType match {
+                case ViewType => MessageAgg(Set(msg.categoryId), msg.ip, 0, 1)
+                case ClickType => MessageAgg(Set(msg.categoryId), msg.ip, 1, 0)
+                case _ => MessageAgg(Set(msg.categoryId), msg.ip, 0, 0)
+              })
+            //Left(msg)
             case Failure(ex) =>
               ex.printStackTrace()
               Right(StreamError(json, ex))

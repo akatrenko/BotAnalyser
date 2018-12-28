@@ -18,11 +18,11 @@ trait BotDetectedFunctions {
              (msgEvent: (String, Iterable[Message])): Option[BadBot] = {
     val currentTimestamp = Timestamp.from(Instant.now())
     if (checkEventRateRule(msgEvent)) {
-      Some(BadBot(msgEvent._1, eventRateRule, currentTimestamp, sourceName))
+      Some(BadBot(msgEvent._1, currentTimestamp, eventRateRule, sourceName))
     } else if (checkTypeDiffRule(msgEvent)) {
-      Some(BadBot(msgEvent._1, typeDiffRule, currentTimestamp, sourceName))
+      Some(BadBot(msgEvent._1, currentTimestamp, typeDiffRule, sourceName))
     } else if (checkCategoryCount(msgEvent)) {
-      Some(BadBot(msgEvent._1, categoryCount, currentTimestamp, sourceName))
+      Some(BadBot(msgEvent._1, currentTimestamp, categoryCount, sourceName))
     } else {
       None
     }

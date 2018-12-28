@@ -29,8 +29,8 @@ trait StructStreamFunctions extends BotDetectedFunctions {
       parseResult match {
         case Success(msg: Message) =>
           msg.actionType match {
-            case ViewType => Some(MessageEvent(new Timestamp(msg.unixTime.toLong), msg.categoryId, msg.ip, 0, 1))
-            case ClickType => Some(MessageEvent(new Timestamp(msg.unixTime.toLong), msg.categoryId, msg.ip, 1, 0))
+            case ViewType => Some(MessageEvent(new Timestamp(msg.unixTime), msg.categoryId, msg.ip, 0, 1))
+            case ClickType => Some(MessageEvent(new Timestamp(msg.unixTime), msg.categoryId, msg.ip, 1, 0))
             case _ => None
           }
         case Failure(ex) =>
@@ -79,7 +79,7 @@ trait StructStreamFunctions extends BotDetectedFunctions {
       .drop("window")
       .as[MessageAgg]
       .filter(findBot _)
-      .map(m => BadBot(m.ip, "", Timestamp.from(Instant.now()), sourceName))
+      .map(m => BadBot(m.ip, Timestamp.from(Instant.now()), "", sourceName))
 
     writeToCassandra(spark, badBotStream, streamProperties)
       .trigger(Trigger.ProcessingTime(triggerProcessTime))
