@@ -70,6 +70,7 @@ trait StructStreamFunctions extends BotDetectedFunctions {
     val messageStream: Dataset[MessageEvent] = deserializeStructStream(structStream, spark)
 
     val badBotStream = messageStream
+      .withWatermark("unixTime", "20 minutes")
       .groupBy($"ip", window($"unixTime", windowDuration, slideDuration))
       .agg(sum($"clickEvent").alias("clicks"),
         sum($"viewEvent").alias("views"),
