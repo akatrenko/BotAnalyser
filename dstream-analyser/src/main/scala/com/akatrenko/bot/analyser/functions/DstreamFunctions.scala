@@ -67,16 +67,22 @@ trait DstreamFunctions extends BotDetectedFunctions {
       .map(_.left.get)
       .map(msg => (msg.ip, msg))
 
+    /*val badBotStream = messageStream
+      .reduceByKeyAndWindow((msg1: MessageAgg, msg2: MessageAgg) => msg1 + msg2, Minutes(windowDurationMin), Minutes(windowSlideMin))
+      .filter(m => findBot(m._2))
+      .map(m => BadBot(m._1, Timestamp.from(Instant.now()), sourceName))*/
+
     val badBotStream = messageStream
       .reduceByKeyAndWindow((msg1: MessageAgg, msg2: MessageAgg) => msg1 + msg2, Minutes(windowDurationMin), Minutes(windowSlideMin))
-      .filter(m=> findBot(m._2))
-      .map(m => BadBot(m._1, Timestamp.from(Instant.now()), sourceName))
-      /*.mapWithState(
+      .mapWithState(
         StateSpec
           .function(stateFunction _)
           .timeout(Minutes(windowDurationMin))
-      )*/
-      //.reduceByKey((l: Vector[MessageAgg], r: Vector[MessageAgg]) => l ++ r)
+      )
+      .filter(_._2.nonEmpty)
+      .reduceByKey((l: Vector[MessageAgg], r: Vector[MessageAgg]) => l ++ r)
+      .map(m => BadBot(m._1, Timestamp.from(Instant.now()), sourceName))
+
 
     badBotStream.saveToCassandra(keyspaceName = cassandraKeySpaceName,
       tableName = cassandraTableName,
@@ -85,7 +91,6 @@ trait DstreamFunctions extends BotDetectedFunctions {
     ssc
   }
 
-  @deprecated
   private def stateFunction(key: String,
                             value: Option[MessageAgg],
                             state: State[Vector[MessageAgg]]): (String, Vector[MessageAgg]) = {
@@ -93,7 +98,11 @@ trait DstreamFunctions extends BotDetectedFunctions {
       if (!state.isTimingOut) {
         state.update(
           if (state.exists() && findBot(msg)) {
-            state.get() :+ msg
+            state.get().filter(x => (for {
+              fTime <- x.eventTime
+              sTime <- value.flatMap(_.eventTime)
+            } yield fTime.getTime < sTime.getTime - 600).nonEmpty
+            ) :+ msg
           } else {
             Vector.empty
           }

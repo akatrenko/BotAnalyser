@@ -74,7 +74,8 @@ trait StructStreamFunctions extends BotDetectedFunctions {
       .groupBy($"ip", window($"unixTime", windowDuration, slideDuration))
       .agg(sum($"clickEvent").alias("clicks"),
         sum($"viewEvent").alias("views"),
-        collect_set($"categoryId").as("categories")
+        collect_set($"categoryId").as("categories"),
+        max($"unixTime").as("eventTime")
       )
       .drop("window")
       .as[MessageAgg]
