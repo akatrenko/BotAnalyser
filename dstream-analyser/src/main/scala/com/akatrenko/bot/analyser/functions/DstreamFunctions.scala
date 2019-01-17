@@ -2,7 +2,7 @@ package com.akatrenko.bot.analyser.functions
 
 import java.sql.Timestamp
 import java.time.temporal.ChronoUnit
-import java.time.{Instant, LocalDate, LocalDateTime}
+import java.time.Instant
 import java.util.Properties
 
 import com.akatrenko.bot.analyser.constant.MessageType.{ClickType, ViewType}
@@ -70,41 +70,18 @@ trait DstreamFunctions extends BotDetectedFunctions {
       .map(_.left.get)
       .map(msg => (msg.ip, msg))*/
 
-    /*val messageStream = deserializeDStream(rowStream.map(_.value()))
-      .filter(eitherMsg => eitherMsg.isLeft && eitherMsg.left.get.checkType)
-      .map(_.left.get)
-      .map(msg => ((msg.ip, msg.eventTime.get), msg))*/
-
     val messageStream = deserializeDStream(rowStream.map(_.value()))
       .filter(eitherMsg => eitherMsg.isLeft && eitherMsg.left.get.checkType)
       .flatMap(m => {
         val res = m.left.get
         val startDate = res.eventTime.get
-        val maxDate =
-          (for (f <- 1 to durationCount) yield {
-            val maxTime = Timestamp.from(startDate.toInstant.plusMillis(f * Minutes(windowSlideMin).milliseconds))
-            res.copy(eventTime = Some(maxTime))
-          }).toList
-        val minDate =
-          (for (f <- 1 to durationCount) yield {
-            val minTime = Timestamp.from(startDate.toInstant.minusMillis(f * Minutes(windowSlideMin).milliseconds))
-            res.copy(eventTime = Some(minTime))
-          }).toList
-        maxDate ++ minDate
-        //res
+        (1 to durationCount).flatMap { f =>
+          val maxTime = Timestamp.from(startDate.toInstant.plusMillis(f * Minutes(windowSlideMin).milliseconds))
+          val minTime = Timestamp.from(startDate.toInstant.minusMillis(f * Minutes(windowSlideMin).milliseconds))
+          List(res.copy(eventTime = Some(maxTime)), res.copy(eventTime = Some(minTime)))
+        }
       })
-    .map(msg => {
-      println(s"msg1 = $msg")
-      ((msg.ip, msg.eventTime.get), msg)
-    })
-    /*.reduceByKey((msg1: MessageAgg, msg2: MessageAgg) => {
-      if (msg2.eventTime.exists { eventTime2 =>
-        val durationInterval = Minutes(windowDurationMin).milliseconds + 60000L
-        val duration = msg1.eventTime.map(eventTime1 => new Timestamp(eventTime1.getTime + durationInterval)).getOrElse(eventTime2)
-        eventTime2.before(duration) && eventTime2.after(msg1.eventTime.getOrElse(eventTime2))
-      }) msg1 + msg2
-      else msg2
-    })*/
+      .map(msg => ((msg.ip, msg.eventTime.get), msg))
 
     /*val badBotStream = messageStream
       .reduceByKeyAndWindow((msg1: MessageAgg, msg2: MessageAgg) => msg1 + msg2, Minutes(windowDurationMin), Minutes(windowSlideMin))
@@ -112,19 +89,13 @@ trait DstreamFunctions extends BotDetectedFunctions {
       .map(m => BadBot(m._1, Timestamp.from(Instant.now()), sourceName))*/
 
     val badBotStream = messageStream
-      .reduceByKey((msg1: MessageAgg, msg2: MessageAgg) => {
-        println(s"msg2 = $msg2")
-        msg1 + msg2
-      })
+      .reduceByKey((msg1: MessageAgg, msg2: MessageAgg) => msg1 + msg2)
       .mapWithState(
         StateSpec
           .function(stateFunction _)
           .timeout(Minutes(windowDurationMin))
       )
-      .filter(m => {
-        println(s"msg3 = $m")
-        m._2.nonEmpty
-      })
+      .filter(m => m._2.nonEmpty)
       .reduceByKey((l: Vector[MessageAgg], r: Vector[MessageAgg]) => l ++ r)
       .map(m => BadBot(m._1, Timestamp.from(Instant.now()), sourceName))
 
@@ -169,8 +140,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
           }
           parseResult match {
             case Success(msg: Message) =>
-              val eventTime = Instant.ofEpochMilli(msg.unixTime).truncatedTo(ChronoUnit.MINUTES)
-              //println(s"eventTime = ${Timestamp.from(eventTime)}, ${new Timestamp(msg.unixTime)}, ${msg.unixTime}")
+              val eventTime = Instant.ofEpochSecond(msg.unixTime).truncatedTo(ChronoUnit.MINUTES)
               Left(msg.actionType match {
                 case ViewType => MessageAgg(Set(msg.categoryId), msg.ip, 0, 1, Some(Timestamp.from(eventTime)))
                 case ClickType => MessageAgg(Set(msg.categoryId), msg.ip, 1, 0, Some(Timestamp.from(eventTime)))
