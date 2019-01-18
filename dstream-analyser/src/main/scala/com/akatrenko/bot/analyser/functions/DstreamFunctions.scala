@@ -64,12 +64,6 @@ trait DstreamFunctions extends BotDetectedFunctions {
     val rowStream = KafkaUtils.createDirectStream[String, String](ssc, PreferConsistent,
       Subscribe[String, String](Set(topicName), kafkaParams))
 
-    /*import org.apache.spark.sql.functions._
-    val messageStream = deserializeDStream(rowStream.map(_.value()))
-      .filter(eitherMsg => eitherMsg.isLeft && eitherMsg.left.get.checkType)
-      .map(_.left.get)
-      .map(msg => (msg.ip, msg))*/
-
     val messageStream = deserializeDStream(rowStream.map(_.value()))
       .filter(eitherMsg => eitherMsg.isLeft && eitherMsg.left.get.checkType)
       .flatMap(m => {
@@ -81,15 +75,14 @@ trait DstreamFunctions extends BotDetectedFunctions {
           List(res.copy(eventTime = Some(maxTime)), res.copy(eventTime = Some(minTime)))
         }
       })
-      .map(msg => ((msg.ip, msg.eventTime.get), msg))
-
-    /*val badBotStream = messageStream
-      .reduceByKeyAndWindow((msg1: MessageAgg, msg2: MessageAgg) => msg1 + msg2, Minutes(windowDurationMin), Minutes(windowSlideMin))
-      .filter(m => findBot(m._2))
-      .map(m => BadBot(m._1, Timestamp.from(Instant.now()), sourceName))*/
+      .map(msg => {
+        val startTime = msg.eventTime.get
+        val endTime = new Timestamp(msg.eventTime.get.getTime + Minutes(windowDurationMin).milliseconds)
+        ((msg.ip, (startTime, endTime)), msg.copy(wind = Some(startTime, endTime)))
+      })
 
     val badBotStream = messageStream
-      .reduceByKey((msg1: MessageAgg, msg2: MessageAgg) => msg1 + msg2)
+      .reduceByKey((msg1: MessageAgg, msg2: MessageAgg) => msg1.+(msg2)(windowDurationMin))
       .mapWithState(
         StateSpec
           .function(stateFunction _)
@@ -107,18 +100,14 @@ trait DstreamFunctions extends BotDetectedFunctions {
     ssc
   }
 
-  private def stateFunction(key: (String, Timestamp),
+  private def stateFunction(key: (String, (Timestamp, Timestamp)),
                             value: Option[MessageAgg],
                             state: State[Vector[MessageAgg]]): (String, Vector[MessageAgg]) = {
     value.foreach { msg =>
       if (!state.isTimingOut) {
         state.update(
           if (state.exists() && findBot(msg)) {
-            state.get() :+ msg /*.filter(x => (for {
-              fTime <- x.eventTime
-              sTime <- value.flatMap(_.eventTime)
-            } yield fTime.getTime < sTime.getTime - 600).nonEmpty
-            ) :+ msg*/
+            state.get() :+ msg
           } else {
             Vector.empty
           }
