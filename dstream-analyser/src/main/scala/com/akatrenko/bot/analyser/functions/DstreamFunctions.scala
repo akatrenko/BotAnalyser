@@ -64,29 +64,32 @@ trait DstreamFunctions extends BotDetectedFunctions {
     val rowStream = KafkaUtils.createDirectStream[String, String](ssc, PreferConsistent,
       Subscribe[String, String](Set(topicName), kafkaParams))
 
-    val messageStream = deserializeDStream(rowStream.map(_.value()))
+    val messageStream = transformDStream(rowStream.map(_.value()))
       .filter(eitherMsg => eitherMsg.isLeft && eitherMsg.left.get.checkType)
-      .flatMap(m => {
-        val res = m.left.get
-        val minDate = res.eventTime.get.toLocalDateTime.minusMinutes(durationCount * Minutes(windowSlideMin).milliseconds)
-        val startPeriod = if (minDate.getMinute % windowSlideMin == 0) {
-          Timestamp.valueOf(minDate)
-        } else {
-          val truncateMinDate = minDate.truncatedTo(ChronoUnit.HOURS)
-          val minutes = minDate.getMinute./(windowSlideMin) * windowSlideMin
-          Timestamp.valueOf(truncateMinDate.plusMinutes(minutes))
+      .flatMap { leftMsg =>
+        val messageAgg = leftMsg.left.get
+        val startPeriod = messageAgg.eventTime.map { minDates =>
+          val minDate = minDates.toLocalDateTime.minusMinutes(durationCount * Minutes(windowSlideMin).milliseconds)
+          if (minDate.getMinute % windowSlideMin == 0) {
+            Timestamp.valueOf(minDate)
+          } else {
+            val truncateMinDate = minDate.truncatedTo(ChronoUnit.HOURS)
+            val minutes = minDate.getMinute./(windowSlideMin) * windowSlideMin
+            Timestamp.valueOf(truncateMinDate.plusMinutes(minutes))
+          }
         }
 
-        (0 to durationCount).map { f =>
-          val eventTime = Timestamp.from(startPeriod.toInstant.plusMillis(f * Minutes(windowSlideMin).milliseconds))
-          res.copy(eventTime = Some(eventTime))
+        (0 to durationCount).map { i =>
+          val eventTime = startPeriod.map(startDate =>
+            Timestamp.from(startDate.toInstant.plusMillis(i * Minutes(windowSlideMin).milliseconds)))
+          messageAgg.copy(eventTime = eventTime)
         }
-      })
-      .map(msg => {
+      }
+      .map { msg =>
         val startTime = msg.eventTime.get
         val endTime = new Timestamp(msg.eventTime.get.getTime + Minutes(windowDurationMin).milliseconds)
         ((msg.ip, (startTime, endTime)), msg.copy(wind = Some(startTime, endTime)))
-      })
+      }
 
     val badBotStream = messageStream
       .reduceByKey((msg1: MessageAgg, msg2: MessageAgg) => msg1.+(msg2)(windowDurationMin))
@@ -96,7 +99,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
           .timeout(Minutes(windowDurationMin))
       )
       .filter(findBot)
-      .map(m => BadBot(m.ip, Timestamp.from(Instant.now()), sourceName))
+      .map(msgAgg => BadBot(msgAgg.ip, Timestamp.from(Instant.now()), sourceName))
 
     badBotStream.saveToCassandra(keyspaceName = cassandraKeySpaceName,
       tableName = cassandraTableName,
@@ -122,8 +125,8 @@ trait DstreamFunctions extends BotDetectedFunctions {
     state.get()
   }
 
-  private def deserializeDStream(stream: DStream[String])
-                                (implicit mf: Manifest[MessageAgg]): DStream[Either[MessageAgg, StreamError[String]]] = {
+  private def transformDStream(stream: DStream[String])
+                              (implicit mf: Manifest[MessageAgg]): DStream[Either[MessageAgg, StreamError[String]]] = {
     stream.transform(rdd => {
       rdd.mapPartitions(jsonIterator => {
         implicit val formats: DefaultFormats = DefaultFormats
