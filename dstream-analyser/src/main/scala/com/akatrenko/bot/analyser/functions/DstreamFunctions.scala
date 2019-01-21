@@ -70,10 +70,10 @@ trait DstreamFunctions extends BotDetectedFunctions {
         val res = m.left.get
         val startDate = res.eventTime.get
         val startDatePeriod =
-          getStartDate(Timestamp.valueOf(startDate.toLocalDateTime.minusMinutes(durationCount * Minutes(windowSlideMin).milliseconds)), windowSlideMin, windowDurationMin)
+          getStartDate(Timestamp.valueOf(startDate.toLocalDateTime.minusMinutes(durationCount * Minutes(windowSlideMin).milliseconds)), windowSlideMin)
         (1 to durationCount).map { f =>
-          val maxTime = Timestamp.from(startDatePeriod.toInstant.plusMillis(f * Minutes(windowSlideMin).milliseconds))
-          res.copy(eventTime = Some(maxTime))
+          val eventTime = Timestamp.from(startDatePeriod.toInstant.plusMillis(f * Minutes(windowSlideMin).milliseconds))
+          res.copy(eventTime = Some(eventTime))
         }
       })
       .map(msg => {
@@ -90,9 +90,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
           .timeout(Minutes(windowDurationMin))
       )
       .filter(findBot)
-      //.reduceByKey((l: Vector[MessageAgg], r: Vector[MessageAgg]) => l ++ r)
       .map(m => BadBot(m.ip, Timestamp.from(Instant.now()), sourceName))
-
 
     badBotStream.saveToCassandra(keyspaceName = cassandraKeySpaceName,
       tableName = cassandraTableName,
@@ -101,9 +99,10 @@ trait DstreamFunctions extends BotDetectedFunctions {
     ssc
   }
 
-  private def getStartDate(startDate: Timestamp, durationCount: Int, windowSlideMin: Int): Timestamp = {
+  private def getStartDate(startDate: Timestamp, slideInterval: Int): Timestamp = {
     val ttDate = startDate.toLocalDateTime.getMinute
-    if(ttDate % durationCount == 0) startDate else getStartDate(Timestamp.valueOf(startDate.toLocalDateTime.minusMinutes(1)), durationCount, windowSlideMin)
+    if(ttDate % slideInterval == 0) startDate
+    else getStartDate(Timestamp.valueOf(startDate.toLocalDateTime.minusMinutes(1)), slideInterval)
   }
 
   private def stateFunction(key: (String, (Timestamp, Timestamp)),
@@ -112,7 +111,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
     value.foreach { msg =>
       if (!state.isTimingOut) {
         state.update(
-          if (state.exists() /*&& findBot(msg)*/) {
+          if (state.exists()) {
             state.get().+(msg)(10)
           } else {
             msg
