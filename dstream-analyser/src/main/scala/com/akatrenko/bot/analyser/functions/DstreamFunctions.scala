@@ -31,7 +31,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
     val streamingIntervalSec = streamProperties.getProperty("dstreaming.interval.sec").toInt
     val windowDurationMin = streamProperties.getProperty("dstreaming.window.duration.min").toInt
     val windowSlideMin = streamProperties.getProperty("dstreaming.window.slide.min").toInt
-    val durationCount = windowDurationMin / windowSlideMin / 2
+    val durationCount = windowDurationMin / windowSlideMin
 
     val topicName = streamProperties.getProperty("dstreaming.kafka.topic.name")
     val kafkaConsumerGroupId = streamProperties.getProperty("dstreaming.kafka.consumer.group")
@@ -69,10 +69,11 @@ trait DstreamFunctions extends BotDetectedFunctions {
       .flatMap(m => {
         val res = m.left.get
         val startDate = res.eventTime.get
-        (1 to durationCount).flatMap { f =>
-          val maxTime = Timestamp.from(startDate.toInstant.plusMillis(f * Minutes(windowSlideMin).milliseconds))
-          val minTime = Timestamp.from(startDate.toInstant.minusMillis(f * Minutes(windowSlideMin).milliseconds))
-          List(res.copy(eventTime = Some(maxTime)), res.copy(eventTime = Some(minTime)))
+        val startDatePeriod =
+          getStartDate(Timestamp.valueOf(startDate.toLocalDateTime.minusMinutes(durationCount * Minutes(windowSlideMin).milliseconds)), windowSlideMin, windowDurationMin)
+        (1 to durationCount).map { f =>
+          val maxTime = Timestamp.from(startDatePeriod.toInstant.plusMillis(f * Minutes(windowSlideMin).milliseconds))
+          res.copy(eventTime = Some(maxTime))
         }
       })
       .map(msg => {
@@ -98,6 +99,11 @@ trait DstreamFunctions extends BotDetectedFunctions {
       writeConf = WriteConf(ttl = TTLOption.constant(cassandraTTL))
     )
     ssc
+  }
+
+  private def getStartDate(startDate: Timestamp, durationCount: Int, windowSlideMin: Int): Timestamp = {
+    val ttDate = startDate.toLocalDateTime.getMinute
+    if(ttDate % durationCount == 0) startDate else getStartDate(Timestamp.valueOf(startDate.toLocalDateTime.minusMinutes(1)), durationCount, windowSlideMin)
   }
 
   private def stateFunction(key: (String, (Timestamp, Timestamp)),
