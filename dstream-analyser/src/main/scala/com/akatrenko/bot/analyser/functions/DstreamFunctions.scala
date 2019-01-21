@@ -68,11 +68,17 @@ trait DstreamFunctions extends BotDetectedFunctions {
       .filter(eitherMsg => eitherMsg.isLeft && eitherMsg.left.get.checkType)
       .flatMap(m => {
         val res = m.left.get
-        val startDate = res.eventTime.get
-        val startDatePeriod =
-          getStartDate(Timestamp.valueOf(startDate.toLocalDateTime.minusMinutes(durationCount * Minutes(windowSlideMin).milliseconds)), windowSlideMin)
-        (1 to durationCount).map { f =>
-          val eventTime = Timestamp.from(startDatePeriod.toInstant.plusMillis(f * Minutes(windowSlideMin).milliseconds))
+        val minDate = res.eventTime.get.toLocalDateTime.minusMinutes(durationCount * Minutes(windowSlideMin).milliseconds)
+        val startPeriod = if (minDate.getMinute % windowSlideMin == 0) {
+          Timestamp.valueOf(minDate)
+        } else {
+          val truncateMinDate = minDate.truncatedTo(ChronoUnit.HOURS)
+          val minutes = minDate.getMinute./(windowSlideMin) * windowSlideMin
+          Timestamp.valueOf(truncateMinDate.plusMinutes(minutes))
+        }
+
+        (0 to durationCount).map { f =>
+          val eventTime = Timestamp.from(startPeriod.toInstant.plusMillis(f * Minutes(windowSlideMin).milliseconds))
           res.copy(eventTime = Some(eventTime))
         }
       })
@@ -97,13 +103,6 @@ trait DstreamFunctions extends BotDetectedFunctions {
       writeConf = WriteConf(ttl = TTLOption.constant(cassandraTTL))
     )
     ssc
-  }
-
-  private def getStartDate(startDate: Timestamp, slideInterval: Int): Timestamp = {
-    val localDate = startDate.toLocalDateTime
-    val dateMinute = localDate.getMinute
-    if(dateMinute % slideInterval == 0) startDate
-    else getStartDate(Timestamp.valueOf(localDate.minusMinutes(1)), slideInterval)
   }
 
   private def stateFunction(key: (String, (Timestamp, Timestamp)),

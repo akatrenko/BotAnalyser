@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="15bcfef9-ba7c-4b7e-8b07-c43fe67b65ee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties" beforeDir="false" afterPath="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" beforeDir="false" afterPath="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -72,7 +73,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="class" value="10" />
+          <entry key="class" value="11" />
           <entry key="conf" value="23" />
           <entry key="java" value="2" />
           <entry key="md" value="1" />
@@ -85,7 +86,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="10" />
+          <entry key="CLASS" value="11" />
           <entry key="HOCON" value="23" />
           <entry key="JAVA" value="2" />
           <entry key="PLAIN_TEXT" value="31" />
@@ -99,9 +100,9 @@
         <counts>
           <entry key="conf" value="90" />
           <entry key="md" value="14" />
-          <entry key="properties" value="120" />
+          <entry key="properties" value="124" />
           <entry key="py" value="10" />
-          <entry key="scala" value="9139" />
+          <entry key="scala" value="9420" />
           <entry key="txt" value="745" />
           <entry key="xml" value="61" />
         </counts>
@@ -110,9 +111,9 @@
         <counts>
           <entry key="HOCON" value="90" />
           <entry key="PLAIN_TEXT" value="759" />
-          <entry key="Properties" value="120" />
+          <entry key="Properties" value="124" />
           <entry key="Python" value="10" />
-          <entry key="Scala" value="9139" />
+          <entry key="Scala" value="9420" />
           <entry key="XML" value="61" />
         </counts>
       </usages-collector>
@@ -123,8 +124,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="670">
-              <caret line="105" column="32" lean-forward="true" selection-start-line="105" selection-start-column="32" selection-end-line="105" selection-end-column="32" />
+            <state relative-caret-position="-790">
+              <caret line="77" column="9" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -153,8 +154,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stream-common/src/test/scala/com/akatrenko/bot/analyser/functions/BotDetectedSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="117" column="3" selection-start-line="117" selection-start-column="3" selection-end-line="117" selection-end-column="3" />
+            <state relative-caret-position="329">
+              <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
               <folding>
                 <element signature="e#46#70#0" expanded="true" />
               </folding>
@@ -187,7 +188,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>AAAAAA</find>
       <find>windowDurationMin</find>
       <find>AAA</find>
       <find>AAAAA</find>
@@ -216,6 +216,7 @@
       <find>msg1 =</find>
       <find>msg2 =</find>
       <find>172.10.3.51,6,1</find>
+      <find>startDatePeriod</find>
       <find>172.10.3.51</find>
     </findStrings>
     <replaceStrings>
@@ -267,10 +268,10 @@
         <option value="$PROJECT_DIR$/partners-flow/scripts/application.conf" />
         <option value="$PROJECT_DIR$/partners-flow/src/main/scala/com/akatrenko/bot/analyser/generator/partners-data.txt" />
         <option value="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/functions/BotDetectedFunctions.scala" />
-        <option value="$PROJECT_DIR$/stream-common/src/test/scala/com/akatrenko/bot/analyser/functions/BotDetectedSpec.scala" />
         <option value="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/Message.scala" />
-        <option value="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties" />
+        <option value="$PROJECT_DIR$/stream-common/src/test/scala/com/akatrenko/bot/analyser/functions/BotDetectedSpec.scala" />
         <option value="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" />
+        <option value="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties" />
       </list>
     </option>
   </component>
@@ -589,7 +590,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548087013954" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548102502692" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -928,16 +929,17 @@
       <option name="project" value="LOCAL" />
       <updated>1548086492910</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="update dstreaming">
+      <created>1548087039797</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1548087039797</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="BotDetectedSpec - 2018.12.02 at 17h 24m 59s.xml">
-      <configuration name="BotDetectedSpec" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="BotDetectedSpec - 2018.12.03 at 12h 02m 09s.xml">
-      <configuration name="BotDetectedSpec" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
     <history-entry file="BotDetectedSpec_Dstream_finder_bot_should_return_1_bot_from_category_count_rule - 2018.12.28 at 13h 42m 04s.xml">
       <configuration name="BotDetectedSpec.Dstream finder bot should return 1 bot from category count rule" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
@@ -960,6 +962,12 @@
       <configuration name="BotDetectedSpec" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
     <history-entry file="BotDetectedSpec - 2019.01.18 at 10h 27m 59s.xml">
+      <configuration name="BotDetectedSpec" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="BotDetectedSpec - 2019.01.22 at 00h 04m 15s.xml">
+      <configuration name="BotDetectedSpec" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="BotDetectedSpec - 2019.01.22 at 00h 04m 51s.xml">
       <configuration name="BotDetectedSpec" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
   </component>
@@ -1287,16 +1295,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stream-common/src/test/scala/com/akatrenko/bot/analyser/functions/BotDetectedSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="117" column="3" selection-start-line="117" selection-start-column="3" selection-end-line="117" selection-end-column="3" />
-          <folding>
-            <element signature="e#46#70#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/Message.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -1317,6 +1315,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stream-common/src/test/scala/com/akatrenko/bot/analyser/functions/BotDetectedSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+          <folding>
+            <element signature="e#46#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.11.8/scala-library-2.11.8.jar!/scala/runtime/RichInt.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -1326,8 +1341,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="105" column="32" lean-forward="true" selection-start-line="105" selection-start-column="32" selection-end-line="105" selection-end-column="32" />
+        <state relative-caret-position="-790">
+          <caret line="77" column="9" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
         </state>
       </provider>
     </entry>
