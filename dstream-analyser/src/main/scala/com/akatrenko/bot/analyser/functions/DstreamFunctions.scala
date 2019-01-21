@@ -129,7 +129,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
           }
           parseResult match {
             case Success(msg: Message) =>
-              val eventTime = Instant.ofEpochSecond(msg.unixTime).truncatedTo(ChronoUnit.HOURS)
+              val eventTime = Instant.ofEpochSecond(msg.unixTime).truncatedTo(ChronoUnit.MINUTES)
               Left(msg.actionType match {
                 case ViewType => MessageAgg(Set(msg.categoryId), msg.ip, 0, 1, Some(Timestamp.from(eventTime)))
                 case ClickType => MessageAgg(Set(msg.categoryId), msg.ip, 1, 0, Some(Timestamp.from(eventTime)))
