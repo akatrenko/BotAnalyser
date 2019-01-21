@@ -88,8 +88,8 @@ trait DstreamFunctions extends BotDetectedFunctions {
           .function(stateFunction _)
           .timeout(Minutes(windowDurationMin))
       )
-      .filter(m => m._2.nonEmpty)
-      .reduceByKey((l: Vector[MessageAgg], r: Vector[MessageAgg]) => l ++ r)
+      .filter(m => findBot(m._2))
+      //.reduceByKey((l: Vector[MessageAgg], r: Vector[MessageAgg]) => l ++ r)
       .map(m => BadBot(m._1, Timestamp.from(Instant.now()), sourceName))
 
 
@@ -102,14 +102,14 @@ trait DstreamFunctions extends BotDetectedFunctions {
 
   private def stateFunction(key: (String, (Timestamp, Timestamp)),
                             value: Option[MessageAgg],
-                            state: State[Vector[MessageAgg]]): (String, Vector[MessageAgg]) = {
+                            state: State[MessageAgg]): (String, MessageAgg) = {
     value.foreach { msg =>
       if (!state.isTimingOut) {
         state.update(
-          if (state.exists() && findBot(msg)) {
-            state.get() :+ msg
+          if (state.exists() /*&& findBot(msg)*/) {
+            state.get().+(msg)(10)
           } else {
-            Vector.empty
+            msg
           }
         )
       }
