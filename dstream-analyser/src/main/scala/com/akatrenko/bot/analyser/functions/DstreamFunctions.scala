@@ -88,9 +88,9 @@ trait DstreamFunctions extends BotDetectedFunctions {
           .function(stateFunction _)
           .timeout(Minutes(windowDurationMin))
       )
-      .filter(m => findBot(m._2))
+      .filter(findBot)
       //.reduceByKey((l: Vector[MessageAgg], r: Vector[MessageAgg]) => l ++ r)
-      .map(m => BadBot(m._1, Timestamp.from(Instant.now()), sourceName))
+      .map(m => BadBot(m.ip, Timestamp.from(Instant.now()), sourceName))
 
 
     badBotStream.saveToCassandra(keyspaceName = cassandraKeySpaceName,
@@ -102,7 +102,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
 
   private def stateFunction(key: (String, (Timestamp, Timestamp)),
                             value: Option[MessageAgg],
-                            state: State[MessageAgg]): (String, MessageAgg) = {
+                            state: State[MessageAgg]): MessageAgg = {
     value.foreach { msg =>
       if (!state.isTimingOut) {
         state.update(
@@ -114,7 +114,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
         )
       }
     }
-    (key._1, state.get())
+    state.get()
   }
 
   private def deserializeDStream(stream: DStream[String])
@@ -129,7 +129,7 @@ trait DstreamFunctions extends BotDetectedFunctions {
           }
           parseResult match {
             case Success(msg: Message) =>
-              val eventTime = Instant.ofEpochSecond(msg.unixTime).truncatedTo(ChronoUnit.MINUTES)
+              val eventTime = Instant.ofEpochSecond(msg.unixTime).truncatedTo(ChronoUnit.HOURS)
               Left(msg.actionType match {
                 case ViewType => MessageAgg(Set(msg.categoryId), msg.ip, 0, 1, Some(Timestamp.from(eventTime)))
                 case ClickType => MessageAgg(Set(msg.categoryId), msg.ip, 1, 0, Some(Timestamp.from(eventTime)))

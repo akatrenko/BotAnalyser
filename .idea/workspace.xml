@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="15bcfef9-ba7c-4b7e-8b07-c43fe67b65ee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties" beforeDir="false" afterPath="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" beforeDir="false" afterPath="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -98,20 +100,20 @@
         <counts>
           <entry key="conf" value="90" />
           <entry key="md" value="14" />
-          <entry key="properties" value="117" />
+          <entry key="properties" value="120" />
           <entry key="py" value="10" />
-          <entry key="scala" value="8786" />
-          <entry key="txt" value="727" />
+          <entry key="scala" value="8818" />
+          <entry key="txt" value="745" />
           <entry key="xml" value="61" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HOCON" value="90" />
-          <entry key="PLAIN_TEXT" value="741" />
-          <entry key="Properties" value="117" />
+          <entry key="PLAIN_TEXT" value="759" />
+          <entry key="Properties" value="120" />
           <entry key="Python" value="10" />
-          <entry key="Scala" value="8786" />
+          <entry key="Scala" value="8818" />
           <entry key="XML" value="61" />
         </counts>
       </usages-collector>
@@ -122,8 +124,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-168">
-              <caret line="71" column="26" lean-forward="true" selection-start-line="71" selection-start-column="26" selection-end-line="71" selection-end-column="26" />
+            <state relative-caret-position="169">
+              <caret line="116" column="33" lean-forward="true" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -268,8 +270,8 @@
         <option value="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/functions/BotDetectedFunctions.scala" />
         <option value="$PROJECT_DIR$/stream-common/src/test/scala/com/akatrenko/bot/analyser/functions/BotDetectedSpec.scala" />
         <option value="$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/Message.scala" />
-        <option value="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" />
         <option value="$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties" />
+        <option value="$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala" />
       </list>
     </option>
   </component>
@@ -588,7 +590,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548058160326" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548072344850" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -892,7 +894,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547801975063</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="update state function in dstreaming">
+      <created>1548058344452</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1548058344452</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -931,7 +940,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26251787" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26251787" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -940,7 +949,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49928468" weight="0.32961586" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4985694" visible="true" weight="0.38289964" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4985694" visible="true" weight="0.38289964" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -975,7 +984,8 @@
     <MESSAGE value="add state func in dstreaming (event processing)" />
     <MESSAGE value="interim version dstreaming" />
     <MESSAGE value="update dstreaming" />
-    <option name="LAST_COMMIT_MESSAGE" value="update dstreaming" />
+    <MESSAGE value="update state function in dstreaming" />
+    <option name="LAST_COMMIT_MESSAGE" value="update state function in dstreaming" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/lang/Long.java">
@@ -1240,16 +1250,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/BotAnalyserDStream.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="e#36#115#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/struct-stream-analyser/src/main/scala/com.akatrenko.bot.analyser/functions/StructStreamFunctions.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1270,13 +1270,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stream-common/src/main/scala/com/akatrenko/bot/analyser/model/Message.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -1287,10 +1280,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/BotAnalyserDStream.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <element signature="e#36#115#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dstream-analyser/scripts/BotAnalyserDStream.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dstream-analyser/src/main/scala/com/akatrenko/bot/analyser/functions/DstreamFunctions.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-168">
-          <caret line="71" column="26" lean-forward="true" selection-start-line="71" selection-start-column="26" selection-end-line="71" selection-end-column="26" />
+        <state relative-caret-position="169">
+          <caret line="116" column="33" lean-forward="true" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="33" />
         </state>
       </provider>
     </entry>
