@@ -100,9 +100,10 @@ trait DstreamFunctions extends BotDetectedFunctions {
   }
 
   private def getStartDate(startDate: Timestamp, slideInterval: Int): Timestamp = {
-    val ttDate = startDate.toLocalDateTime.getMinute
-    if(ttDate % slideInterval == 0) startDate
-    else getStartDate(Timestamp.valueOf(startDate.toLocalDateTime.minusMinutes(1)), slideInterval)
+    val localDate = startDate.toLocalDateTime
+    val dateMinute = localDate.getMinute
+    if(dateMinute % slideInterval == 0) startDate
+    else getStartDate(Timestamp.valueOf(localDate.minusMinutes(1)), slideInterval)
   }
 
   private def stateFunction(key: (String, (Timestamp, Timestamp)),
